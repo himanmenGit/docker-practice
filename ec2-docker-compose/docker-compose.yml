@@ -18,7 +18,7 @@ services:
         ports:
           - "8080:80"
         volumes:
-          - web_data:/srv/ec2-docker-compose
+          - ./web:/srv/ec2-docker-compose
           - ./log:/var/log/nginx
         depends_on:
           - web
@@ -31,12 +31,11 @@ services:
         ports:
           - "8002:8000"
         volumes:
-          - web_data:/srv/ec2-docker-compose
+          - ./web:/srv/ec2-docker-compose
           - ./log:/var/log/uwsgi
         depends_on:
           - db
 
 volumes:
-    web_data:
     pgdata:
 
