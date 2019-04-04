@@ -16,7 +16,7 @@ services:
         build: ./nginx
         restart: always
         ports:
-          - "8080:80"
+          - "80:80"
         volumes:
           - ./web:/srv/ec2-docker-compose
           - ./log:/var/log/nginx
@@ -28,8 +28,6 @@ services:
         build: ./web
         restart: always
         command: uwsgi --ini uwsgi.ini
-        ports:
-          - "8002:8000"
         volumes:
           - ./web:/srv/ec2-docker-compose
           - ./log:/var/log/uwsgi
