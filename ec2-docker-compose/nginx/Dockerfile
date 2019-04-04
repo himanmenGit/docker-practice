@@ -1,9 +1,10 @@
-FROM    nginx:latest
+FROM nginx:latest
 
-COPY    nginx.conf      /etc/nginx/nginx.conf
-COPY    nginx-app.conf  /etc/nginx/sites-available/
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx-app.conf /etc/nginx/sites-available/
 
-RUN     mkdir -p /etc/nginx/sites-enabled/ \
-        && ln -s /etc/nginx/sites-avaliable/nginx-app.conf /etc/nginx/sites-enabled/
+RUN mkdir -p /etc/nginx/sites-enabled/\
+    && ln -s /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/
 
-CMD     ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
+
