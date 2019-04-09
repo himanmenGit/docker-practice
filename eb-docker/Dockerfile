@@ -1,7 +1,7 @@
 FROM            python:3.6.7-slim
 MAINTAINER      study.himanmen@gmail.com
 
-ENV             LANG    C.UTF-8
+ENV             LANG C.UTF-8
 
 # apt-get으로 nginx, supervisor 설치
 RUN             apt-get -y update
