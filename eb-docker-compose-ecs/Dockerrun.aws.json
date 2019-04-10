@@ -1,0 +1,99 @@
+{
+    "AWSEBDockerrunVersion": "2",
+    "containerDefinitions": [
+        {
+            "environment": [
+                {
+                    "name": "POSTGRES_PASSWORD",
+                    "value": "password123"
+                }
+            ],
+            "essential": true,
+            "image": "postgres",
+            "mountPoints": [
+                {
+                    "containerPath": "/var/lib/postgresql/data/",
+                    "sourceVolume": "Pgdata"
+                }
+            ],
+            "name": "db",
+            "memory": 128,
+            "portMappings": [
+                {
+                    "containerPort": 5432,
+                    "hostPort": 5432
+                }
+            ]
+        },
+        {
+            "links": [
+                "web"
+            ],
+            "essential": true,
+            "image": "himanmen/nginx",
+            "mountPoints": [
+                {
+                    "containerPath": "/tmp",
+                    "sourceVolume": "_Web"
+                },
+                {
+                    "containerPath": "/var/log/nginx",
+                    "sourceVolume": "_Log"
+                }
+            ],
+            "name": "nginx",
+            "memory": 128,
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80
+                }
+            ]
+        },
+        {
+            "links": [
+                "db"
+            ],
+            "command": [
+                "uwsgi",
+                "--ini",
+                "uwsgi.ini"
+            ],
+            "essential": true,
+            "image": "himanmen/web",
+            "mountPoints": [
+                {
+                    "containerPath": "/tmp",
+                    "sourceVolume": "_Web"
+                },
+                {
+                    "containerPath": "/var/log/uwsgi",
+                    "sourceVolume": "_Log"
+                }
+            ],
+            "name": "web",
+            "memory": 128
+        }
+    ],
+    "family": "",
+    "volumes": [
+        {
+            "host": {
+                "sourcePath": "pgdata"
+            },
+            "name": "Pgdata"
+        },
+        {
+            "host": {
+                "sourcePath": "web"
+            },
+            "name": "_Web"
+        },
+        {
+            "host": {
+                "sourcePath": "log"
+            },
+            "name": "_Log"
+        }
+    ]
+}
